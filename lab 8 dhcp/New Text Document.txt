@@ -1,0 +1,57 @@
+Router>enable
+	
+Router#configure terminal
+Router(config)#hostname dhpc-server
+
+dhpc-server(config)#interface gig0/0/0
+dhpc-server(config-if)#ip address 192.168.1.1 255.255.255.0
+dhpc-server(config-if)#no shutdown
+
+dhpc-server(config-if)#interface gig0/0/1
+dhpc-server(config-if)#ip address 192.168.2.1 255.255.255.0
+dhpc-server(config-if)#no shutdown
+dhpc-server(config-if)#exit
+
+dhpc-server(config)#do show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol 
+GigabitEthernet0/0/0   192.168.1.1     YES manual up                    up 
+GigabitEthernet0/0/1   192.168.2.1     YES manual up                    up 
+GigabitEthernet0/0/2   unassigned      YES unset  administratively down down 
+Vlan1                  unassigned      YES unset  administratively down down
+	
+dhpc-server(config)#ip dhcp excluded-address 192.168.1.1
+dhpc-server(config)#ip dhcp excluded-address 192.168.2.1
+dhpc-server(config)#ip dhcp pool 192.168.1.1
+dhpc-server(dhcp-config)#network 192.168.1.0 255.255.255.0	
+dhpc-server(dhcp-config)#default-router 192.168.1.1
+dhpc-server(dhcp-config)#dns-server 8.8.8.8
+dhpc-server(dhcp-config)#exit
+
+
+dhpc-server(config)#ip dhcp pool 192.168.2.1
+dhpc-server(dhcp-config)#network 192.168.2.0 255.255.255.0
+dhpc-server(dhcp-config)#default-router 192.168.2.1
+dhpc-server(dhcp-config)#dns-server 8.8.8.8
+dhpc-server(dhcp-config)#exit
+
+
+pinging pc2 192.168.1.4 to pc 3 192.168.2.4
+
+
+C:\>ping 192.168.2.4
+
+Pinging 192.168.2.4 with 32 bytes of data:
+
+Request timed out.
+Reply from 192.168.2.4: bytes=32 time<1ms TTL=127
+Reply from 192.168.2.4: bytes=32 time<1ms TTL=127
+Reply from 192.168.2.4: bytes=32 time<1ms TTL=127
+
+Ping statistics for 192.168.2.4:
+    Packets: Sent = 4, Received = 3, Lost = 1 (25% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\>
+
+

@@ -1,0 +1,76 @@
+on router 1
+
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#router ?
+  bgp    Border Gateway Protocol (BGP)
+  eigrp  Enhanced Interior Gateway Routing Protocol (EIGRP)
+  ospf   Open Shortest Path First (OSPF)
+  rip    Routing Information Protocol (RIP)
+
+
+
+Router(config)#router rip
+Router(config-router)#network 192.168.2.0
+Router(config-router)#network 192.168.3.0
+Router(config-router)#network 192.168.4.0
+Router(config-router)#network 192.168.5.0
+Router(config-router)#end
+Router#
+
+
+on router 3
+
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#router rip
+Router(config-router)#network 192.168.1.0
+Router(config-router)#network 192.168.2.0
+Router(config-router)#network 192.168.4.0
+Router(config-router)#network 192.168.5.0
+Router(config-router)#
+
+
+on router 2
+
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#router rip
+Router(config-router)#network 192.168.4.0
+Router(config-router)#network 192.168.5.0
+Router(config-router)#
+
+
+C:\>ping 192.168.3.3
+
+Pinging 192.168.3.3 with 32 bytes of data:
+
+Request timed out.
+Reply from 192.168.3.3: bytes=32 time=10ms TTL=126
+Reply from 192.168.3.3: bytes=32 time=10ms TTL=126
+Reply from 192.168.3.3: bytes=32 time=10ms TTL=126
+
+Ping statistics for 192.168.3.3:
+    Packets: Sent = 4, Received = 3, Lost = 1 (25% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 10ms, Maximum = 10ms, Average = 10ms
+
+C:\>
+
+
+
+The first ping often gets lost after configuring dynamic routing due to ARP (Address Resolution Protocol) and/or route convergence delays. Here's why:
+
+1. ARP Resolution
+When a host sends the first packet to a destination, the sender may not know the MAC address of the next-hop device.
+The ARP process is triggered, where the device sends an ARP request to resolve the MAC address of the next hop.
+During this resolution, the first packet (the ping request) might be dropped because the ARP process takes some time to complete.
+2. Route Convergence Delays
+After configuring dynamic routing protocols (e.g., OSPF, EIGRP, or BGP), routers need to exchange route updates and build their routing tables.
+If the routing protocol hasn't fully converged, the router might temporarily lack a valid route to the destination.
+The first ping packet might be dropped while the route is being learned or updated.
+

@@ -1,0 +1,37 @@
+for 1st router 
+routing to be done with pnetwerk 2,3,5
+
+in cli 
+	 destination network 		next network
+ip route 192.168.2.0 255.255.255.0 192.168.4.2
+ip route 192.168.3.0 255.255.255.0 192.168.4.2
+ip route 192.168.5.0 255.255.255.0 192.168.4.2
+
+
+for router 3
+ip route 192.168.2.0 255.255.255.0 192.168.5.1
+ip route 192.168.4.0 255.255.255.0 192.168.5.1
+ip route 192.168.1.0 255.255.255.0 192.168.5.1
+
+for router 2
+ip route 192.168.3.0 255.255.255.0 192.168.5.2
+ip route 192.168.1.0 255.255.255.0 192.168.4.1
+
+
+isco Packet Tracer PC Command Line 1.0
+C:\>ping 192.168.3.3
+
+Pinging 192.168.3.3 with 32 bytes of data:
+
+Request timed out.
+Reply from 192.168.3.3: bytes=32 time=2ms TTL=125
+Reply from 192.168.3.3: bytes=32 time=26ms TTL=125
+Reply from 192.168.3.3: bytes=32 time=2ms TTL=125
+
+Ping statistics for 192.168.3.3:
+    Packets: Sent = 4, Received = 3, Lost = 1 (25% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 2ms, Maximum = 26ms, Average = 10ms
+
+C:\>
+C:\>
