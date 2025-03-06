@@ -1,5 +1,5 @@
 for 1st router 
-routing to be done with pnetwerk 2,3,5
+routing to be done with network 2,3,5
 
 in cli 
 	 destination network 		next network
